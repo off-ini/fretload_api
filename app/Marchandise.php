@@ -15,14 +15,14 @@ class Marchandise extends Model
         return $this->belongsTo('App\TypeMarchandise', 'type_marchandise_id');
     }
 
-    public function lieu_depart()
+    public function adresse_depart()
     {
-        return $this->belongsTo('App\Lieu', 'lieu_depart_id');
+        return $this->belongsTo('App\Adresse', 'adresse_depart_id');
     }
 
-    public function lieu_arriver()
+    public function adresse_arriver()
     {
-        return $this->belongsTo('App\Lieu', 'lieu_arriver_id');
+        return $this->belongsTo('App\Adresse', 'adresse_arriver_id');
     }
 
     public function destinataire()

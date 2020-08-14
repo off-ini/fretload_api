@@ -13,7 +13,7 @@ class CreateLieusTable extends Migration
      */
     public function up()
     {
-        Schema::create('lieux', function (Blueprint $table) {
+        Schema::create('adresses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('description')->nullable();
@@ -33,6 +33,6 @@ class CreateLieusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lieux');
+        Schema::dropIfExists('adresses');
     }
 }

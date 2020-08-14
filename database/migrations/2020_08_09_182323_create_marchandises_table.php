@@ -20,8 +20,8 @@ class CreateMarchandisesTable extends Migration
             $table->string('image')->nullable();
             $table->double('poid')->nullable();
             $table->double('volume')->nullable();
-            $table->integer('lieu_depart_id')->unsigned();
-            $table->integer('lieu_arriver_id')->unsigned();
+            $table->integer('adresse_depart_id')->unsigned();
+            $table->integer('adresse_arriver_id')->unsigned();
             $table->integer('destinataire_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();

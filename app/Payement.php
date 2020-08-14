@@ -10,6 +10,11 @@ class Payement extends Model
         'id'
     ];
 
+    public function mode_payement()
+    {
+        return $this->belongsTo('App\ModePayement', 'mode_payement_id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');

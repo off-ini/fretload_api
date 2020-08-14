@@ -13,19 +13,19 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         DB::table('permissions')->insert([
-            'tag' => 'ADD_ROLE',
+            'tag' => 'CREATE',
         ]);
 
         DB::table('permissions')->insert([
-            'tag' => 'REMOVE_ROLE',
+            'tag' => 'READ',
         ]);
 
         DB::table('permissions')->insert([
-            'tag' => 'ADD_COURS',
+            'tag' => 'UPDATE',
         ]);
 
         DB::table('permissions')->insert([
-            'tag' => 'EDITE_COURS',
+            'tag' => 'DELETE',
         ]);
     }
 }

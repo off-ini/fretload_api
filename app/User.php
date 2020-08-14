@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Str;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -65,6 +66,14 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public static function getCode()
+    {
+        $key = Str::upper(Str::random(8));
+        if(static::where(['code' => $key])->first())
+            return static::getCode();
+        return $key;
     }
 
     public function roles()

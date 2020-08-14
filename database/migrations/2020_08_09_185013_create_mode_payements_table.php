@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePayementsTable extends Migration
+class CreateModePayementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePayementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payements', function (Blueprint $table) {
+        Schema::create('mode_payements', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('montant');
-            $table->integer('mode_payement_id')->unsigned();
-            $table->integer('mission_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->string('libelle');
+            $table->string('default_image')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePayementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payements');
+        Schema::dropIfExists('mode_payements');
     }
 }

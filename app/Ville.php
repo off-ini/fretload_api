@@ -25,8 +25,8 @@ class Ville extends Model
         return $this->hasMany('App\Destinataire', 'ville_id');
     }
 
-    public function lieux()
+    public function adresses()
     {
-        return $this->hasMany('App\Lieu', 'ville_id');
+        return $this->hasMany('App\Adresse', 'ville_id');
     }
 }

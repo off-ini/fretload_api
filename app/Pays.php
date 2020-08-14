@@ -13,6 +13,6 @@ class Pays extends Model
 
     public function villes()
     {
-        return $this->belongsTo('App\Ville', 'pays_id');
+        return $this->hasMany('App\Ville', 'pays_id');
     }
 }
