@@ -20,10 +20,15 @@ class Annonce extends Model
         return $this->belongsTo('App\Marchandise', 'marchandise_id');
     }
 
+    public function ps()
+    {
+        return $this->hasMany('App\Proposition', 'annonce_id');
+    }
+
     public function propositions()
     {
         return $this->belongsToMany('App\User', 'propositions', 'annonce_id', 'user_id')
-                    ->withPivot('montant', 'accepted_at', 'status')
+                    ->withPivot('montant_t', 'montant_p', 'accepted_at', 'status', 'is_read', 'proposition_reply_id')
                     ->withTimestamps();
     }
 }

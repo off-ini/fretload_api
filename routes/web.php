@@ -11,12 +11,10 @@
 |
 */
 
-use App\User;
-
-Route::get('/', function () {
+/*Route::get('/', function () {
     return response()->json(['message' => 'FretLoad API v1'], 200);
 });
 
 Route::get('/{path}', function () {
     return response()->json(['message' => 'FretLoad API v1'], 200);
-})->where('path', '.*');
+})->where('path', '.*');*/

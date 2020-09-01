@@ -14,10 +14,8 @@ use Illuminate\Http\Request;
 */
 
 $v1Prefix = 'v1/';
-
 include base_path('routes/api/apiPublic.php');
-include base_path('routes/api/apiPays.php');
-include base_path('routes/api/apiUser.php');
+include base_path('routes/api/apiMaster.php');
 
 
 Route::fallback(function(){

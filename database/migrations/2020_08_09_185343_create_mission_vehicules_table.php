@@ -16,7 +16,7 @@ class CreateMissionVehiculesTable extends Migration
         Schema::create('mission_vehicule', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('mission_id')->unsigned();
-            $table->integer('vehicle_id')->unsigned();
+            $table->integer('vehicule_id')->unsigned();
             $table->timestamps();
         });
     }

@@ -24,8 +24,10 @@ class CreateMissionsTable extends Migration
             $table->dateTime('date_arriver_eff')->nullable();
             $table->integer('status')->default(0);
             $table->integer('marchandise_id')->unsigned();
+            $table->integer('destinataire_id')->unsigned();
             $table->integer('proposition_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->integer('user_p_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

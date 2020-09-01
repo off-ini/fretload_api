@@ -26,7 +26,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $user = User::where(['username' => $request->username, 'password' => md5($request->password)])->first();
+        $user = User::where(['username' => $request->username, 'password' => md5($request->password), 'is_actived' => 1])->first();
         if (!$user || ! $token = Auth::login($user)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

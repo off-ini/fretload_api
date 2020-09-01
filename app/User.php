@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Str;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -23,6 +23,11 @@ class User extends Authenticatable implements JWTSubject
         'username',
         'password',
     ];*/
+
+    public static $status = [
+        'LIBRE',
+        'LIVRAISON'
+    ];
 
     protected $guarded  = [
         'id'
@@ -92,19 +97,29 @@ class User extends Authenticatable implements JWTSubject
     public function propositions()
     {
         return $this->belongsToMany('App\Annonce', 'propositions', 'annonce_id', 'user_id')
-                    ->withPivot('montant', 'accepted_at', 'status')
+        ->withPivot('montant_t', 'montant_p', 'accepted_at', 'status', 'is_read', 'proposition_reply_id')
                     ->withTimestamps();
     }
 
     public function chauffeur_missions()
     {
-        return $this->belongsToMany('App\Mission', 'chauffeur_mission', 'chauffeur_id', 'mission_id')
+        return $this->belongsToMany('App\Mission', 'chauffeur_mission', 'mission_id', 'chauffeur_id')
                     ->withTimestamps();
     }
 
     public function role_users()
     {
         return $this->hasMany('App\RoleUser', 'user_id');
+    }
+
+    public function links()
+    {
+        return $this->hasMany('App\Link', 'user_id');
+    }
+
+    public function adresses()
+    {
+        return $this->hasMany('App\Adresse', 'user_id');
     }
 
     public function chauffeures()
@@ -125,6 +140,11 @@ class User extends Authenticatable implements JWTSubject
     public function missions()
     {
         return $this->hasMany('App\Mission', 'user_id');
+    }
+
+    public function proprietaire_missions()
+    {
+        return $this->hasMany('App\Mission', 'user_p_id');
     }
 
     public function vehicules()

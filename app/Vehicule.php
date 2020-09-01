@@ -4,8 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class vehicule extends Model
+class Vehicule extends Model
 {
+    public static $status = [
+        'LIBRE',
+        'LIVRAISON'
+    ];
+
     protected $guarded  = [
         'id'
     ];
@@ -17,7 +22,7 @@ class vehicule extends Model
 
     public function missions()
     {
-        return $this->belongsToMany('App\Mission', 'mission_vehicule', 'vehicule_id', 'mission_id')
+        return $this->belongsToMany('App\Mission', 'mission_vehicule', 'mission_id', 'vehicule_id')
                     ->withTimestamps();
     }
 

@@ -22,6 +22,7 @@ class CreateLieusTable extends Migration
             $table->string('logitude')->nullable();
             $table->string('latitude')->nullable();
             $table->integer('ville_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

@@ -20,9 +20,12 @@ class CreateMarchandisesTable extends Migration
             $table->string('image')->nullable();
             $table->double('poid')->nullable();
             $table->double('volume')->nullable();
+            $table->double('qte')->nullable();
+            $table->integer('status')->default(0);
             $table->integer('adresse_depart_id')->unsigned();
             $table->integer('adresse_arriver_id')->unsigned();
-            $table->integer('destinataire_id')->unsigned();
+            $table->integer('destinataire_id')->unsigned()->nullable();
+            $table->integer('type_marchandise_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });

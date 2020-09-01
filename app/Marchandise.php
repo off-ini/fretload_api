@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Marchandise extends Model
 {
+    public static $status = [
+        'LIBRE',
+        'ANNONCER',
+        'CHARGEMENT',
+        'TRANSIT',
+        'LIVRER'
+    ];
+
     protected $guarded  = [
         'id'
     ];

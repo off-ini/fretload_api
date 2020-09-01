@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleResource extends JsonResource
 {
+    public $preserveKeys = true;
     /**
      * Transform the resource into an array.
      *
@@ -15,6 +16,9 @@ class RoleResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
+            'label' => $this->libelle,
+            'value' => $this->id,
             'libelle' => $this->libelle,
         ];
     }

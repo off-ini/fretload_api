@@ -18,13 +18,16 @@ class CreateDestinatairesTable extends Migration
             $table->string('name');
             $table->string('f_name');
             $table->string('email')->unique();
+            $table->dateTime('naissance')->nullable();
+            $table->char('sexe')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone');
             $table->timestamp('phone_verified_at')->nullable();
-            $table->string('adresse');
+            $table->string('adresse')->nullable();
             $table->string('photo')->nullable();
+            $table->integer('status')->default(0);
             $table->integer('ville_id')->unsigned();
-            $table->integer('pays_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

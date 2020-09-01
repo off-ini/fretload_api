@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class adresse extends Model
+class Adresse extends Model
 {
     protected $table='adresses';
     protected $guarded  = [
@@ -14,6 +14,11 @@ class adresse extends Model
     public function ville()
     {
         return $this->belongsTo('App\Ville', 'ville_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     public function adresse_departs()

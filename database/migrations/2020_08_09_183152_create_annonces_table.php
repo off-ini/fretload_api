@@ -18,7 +18,7 @@ class CreateAnnoncesTable extends Migration
             $table->string('title')->nullable();
             $table->string('body')->nullable();
             $table->string('payload')->nullable();
-            $table->boolean('is_public')->default(false);
+            $table->boolean('is_public')->default(true);
             $table->integer('marchandise_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('user_sigle_id')->nullable()->unsigned();

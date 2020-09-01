@@ -21,6 +21,7 @@ class CreateVehiculesTable extends Migration
             $table->double('capacite')->nullable();
             $table->double('taille')->nullable();
             $table->string('image')->nullable();
+            $table->integer('status')->default(0);
             $table->integer('type_vehicule_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();

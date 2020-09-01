@@ -20,8 +20,13 @@ class Destinataire extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function marchandise()
+    public function marchandises()
     {
-        return $this->belongsTo('App\Marchandise', 'marchandise_id');
+        return $this->hasMany('App\Marchandise', 'destinataire_id');
+    }
+
+    public function missions()
+    {
+        return $this->hasMany('App\Mission', 'destinataire_id');
     }
 }
