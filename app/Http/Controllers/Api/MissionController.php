@@ -23,7 +23,15 @@ class MissionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return MissionResource::collection(Mission::where(['user_id' => $user->id])->orderBy('created_at', 'DESC')->paginate(6));
+        $role = $user->roles[0];
+
+        if($role->id == 2)
+        {
+            return MissionResource::collection(Mission::where(['user_p_id' => $user->id])->orderBy('created_at', 'DESC')->paginate(6));
+        }else if($role->id >= 3)
+        {
+            return MissionResource::collection(Mission::where(['user_id' => $user->id])->orderBy('created_at', 'DESC')->paginate(6));
+        }
     }
 
     /**

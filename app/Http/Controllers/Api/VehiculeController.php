@@ -26,7 +26,7 @@ class VehiculeController extends Controller
     public function libre()
     {
         $user = Auth::user();
-        return VehiculeResource::collection(Vehicule::where(['user_id' => $user->id])->orderBy('created_at', 'DESC')->get());
+        return VehiculeResource::collection(Vehicule::where(['user_id' => $user->id, 'status' => 0])->orderBy('created_at', 'DESC')->get());
     }
 
     /**

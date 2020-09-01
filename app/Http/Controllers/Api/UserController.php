@@ -30,7 +30,7 @@ class UserController extends Controller
     public function chauffeurLibre()
     {
         $user = Auth::user();
-        return UserShowResource::collection(User::where(['user_chauffeur_id' => $user->id])->get());
+        return UserShowResource::collection(User::where(['user_chauffeur_id' => $user->id, 'status' => 0])->get());
     }
 
     /**
