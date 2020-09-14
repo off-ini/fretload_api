@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MissionResource;
 use App\Mission;
+use App\Notifications\MissionNotification;
 use App\Proposition;
 use App\User;
 use App\Vehicule;
@@ -85,12 +87,24 @@ class MissionController extends Controller
                 $data->save();
                 $data->vehicules()->sync($request->vehicule_ids);
                 $data->chauffeurs()->sync($request->chauffeur_ids);
+
                 Vehicule::whereIn('id', $request->vehicule_ids)->update(['status' => 1]);
                 User::whereIn('id', $request->chauffeur_ids)->update(['status' => 1]);
                 Proposition::find($request->proposition_id)->update(['is_mission' => true]);
+
             DB::commit();
 
+            $user = $data->proprietaire->notify(new MissionNotification(new MissionResource($data)));
+            $this->notification($user);
+
         return response()->json(new MissionResource($data), 201);
+    }
+
+    public function notification($user)
+    {
+        $notifications = $user->unreadNotifications()->first();
+        event(new NotificationEvent(['user_id' => $user->id, 'data' => $notifications]));
+        return $notifications;
     }
 
     /**

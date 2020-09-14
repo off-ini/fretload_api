@@ -43,4 +43,5 @@ Route::group(['middleware' => 'jwt', 'prefix' => $v1Prefix], function () {
     Route::apiResource('annonces', 'Api\AnnonceController');
     Route::apiResource('propositions', 'Api\PropositionController');
     Route::apiResource('missions', 'Api\MissionController');
+    Route::apiResource('notifications', 'Api\NotificationController');
 });

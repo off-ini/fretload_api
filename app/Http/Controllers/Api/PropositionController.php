@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Annonce;
+use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PropositionResource;
 use App\Http\Resources\PropositionShowResource;
+use App\Notifications\PropositionAcceptNotification;
+use App\Notifications\PropositionNotification;
 use App\Proposition;
 use Illuminate\Http\Request;
-use Validator;
-use Auth;
-use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class PropositionController extends Controller
 {
@@ -97,6 +99,10 @@ class PropositionController extends Controller
                 'is_accept' => true,
                 'accepted_at' => now(),
             ]);
+            $user = $data->user;
+
+            $user->notify(new PropositionAcceptNotification(new PropositionResource($data)));
+            $this->notification($user);
         }
         return response()->json(new PropositionResource($data), 200);
     }
@@ -140,10 +146,23 @@ class PropositionController extends Controller
             return response()->json(['error' => 'Resource introuvable'], 404);
         else
         {
+
             $data->update($request->all());
+
+            $user = Annonce::find($annonce_id)->user;
+
+            $user->notify(new PropositionNotification(new PropositionResource($data)));
+            $this->notification($user);
 
             return response()->json(new PropositionResource($data), 200);
         }
+    }
+
+    public function notification($user)
+    {
+        $notifications = $user->unreadNotifications()->first();
+        event(new NotificationEvent(['user_id' => $user->id, 'data' => $notifications]));
+        return $notifications;
     }
 
     /**

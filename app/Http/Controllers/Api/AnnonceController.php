@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Annonce;
+use App\Events\AnnonceEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AnnonceResource;
 use App\Marchandise;
@@ -95,6 +96,7 @@ class AnnonceController extends Controller
             DB::beginTransaction();
                 $data->save();
                 Marchandise::find($request->marchandise_id)->update(['status' => 1]);
+                event(new AnnonceEvent(new AnnonceResource($data)));
             DB::commit();
 
         return response()->json(new AnnonceResource($data), 201);

@@ -87,12 +87,12 @@ class User extends Authenticatable implements JWTSubject
                     ->withTimestamps();
     }
 
-    public function notifications()
+    /*public function notifications()
     {
         return $this->belongsToMany('App\Notification', 'notification_user', 'nofication_id', 'user_id')
                     ->withPivot('is_read')
                     ->withTimestamps();
-    }
+    }*/
 
     public function propositions()
     {
