@@ -55,7 +55,7 @@ class AnnonceController extends Controller
 
             return AnnonceResource::collection($data_news->orderBy('created_at', 'DESC')->get());
         }
-        return null;
+        return [];
     }
 
     /**
