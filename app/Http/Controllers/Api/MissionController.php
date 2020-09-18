@@ -10,10 +10,11 @@ use App\Notifications\MissionNotification;
 use App\Proposition;
 use App\User;
 use App\Vehicule;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class MissionController extends Controller
 {
@@ -69,6 +70,7 @@ class MissionController extends Controller
 
         if($v->fails()) return response()->json($v->errors(), 400);
         $data = new Mission();
+            $data->code = Mission::getCode();
             $data->title = $request->title;
             $data->montant = $request->montant;
             $data->date_depart_pre = date("Y-m-d", strtotime($request->date_depart_pre));
@@ -94,8 +96,10 @@ class MissionController extends Controller
 
             DB::commit();
 
-            $user = $data->proprietaire->notify(new MissionNotification(new MissionResource($data)));
-            $this->notification($user);
+            try{
+                $user = $data->proprietaire->notify(new MissionNotification(new MissionResource($data)));
+                $this->notification($user);
+            }catch(Exception $e){}
 
         return response()->json(new MissionResource($data), 201);
     }

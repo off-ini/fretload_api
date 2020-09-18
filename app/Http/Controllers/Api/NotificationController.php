@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,8 +73,11 @@ class NotificationController extends Controller
     public function update(Request $request, $id)
     {
         $user = Auth::user();
-        $notification = $user->notifications;
-        $notification->find($id)->markAsRead();
+        try{
+            $notification = $user->notifications;
+            $notification->find($id)->markAsRead();
+        }catch(Exception $e){}
+
         return 'OK';
     }
 

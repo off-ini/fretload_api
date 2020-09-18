@@ -9,7 +9,7 @@ use App\Http\Resources\UserShowResource;
 use App\Link;
 use App\User;
 use Exception;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

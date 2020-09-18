@@ -15,9 +15,12 @@ class CreateAnnoncesTable extends Migration
     {
         Schema::create('annonces', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code');
             $table->string('title')->nullable();
             $table->string('body')->nullable();
             $table->string('payload')->nullable();
+            $table->double('montant')->nullable();
+            $table->double('montant_k')->nullable();
             $table->boolean('is_public')->default(true);
             $table->integer('marchandise_id')->unsigned();
             $table->integer('user_id')->unsigned();

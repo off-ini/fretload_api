@@ -10,6 +10,7 @@ use App\Http\Resources\PropositionShowResource;
 use App\Notifications\PropositionAcceptNotification;
 use App\Notifications\PropositionNotification;
 use App\Proposition;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -101,8 +102,10 @@ class PropositionController extends Controller
             ]);
             $user = $data->user;
 
-            $user->notify(new PropositionAcceptNotification(new PropositionResource($data)));
-            $this->notification($user);
+            try{
+                $user->notify(new PropositionAcceptNotification(new PropositionResource($data)));
+                $this->notification($user);
+            }catch(Exception $e){}
         }
         return response()->json(new PropositionResource($data), 200);
     }
@@ -151,8 +154,10 @@ class PropositionController extends Controller
 
             $user = Annonce::find($annonce_id)->user;
 
-            $user->notify(new PropositionNotification(new PropositionResource($data)));
-            $this->notification($user);
+            try{
+                $user->notify(new PropositionNotification(new PropositionResource($data)));
+                $this->notification($user);
+            }catch(Exception $e){}
 
             return response()->json(new PropositionResource($data), 200);
         }

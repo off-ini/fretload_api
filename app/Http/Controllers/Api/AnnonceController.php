@@ -8,9 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AnnonceResource;
 use App\Marchandise;
 use App\Proposition;
+use Exception;
 use Illuminate\Http\Request;
-use Validator;
-use Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AnnonceController extends Controller
@@ -30,6 +31,8 @@ class AnnonceController extends Controller
             $data = Annonce::where(['user_id' => $user->id]);
         }else if($role->id >= 3)
         {
+            return AnnonceResource::collection(Annonce::orderBy('created_at', 'DESC')->paginate(6));
+        }else{
             return AnnonceResource::collection(Annonce::orderBy('created_at', 'DESC')->paginate(6));
         }
 
@@ -77,17 +80,19 @@ class AnnonceController extends Controller
     public function store(Request $request)
     {
         $v = Validator::make($request->all(), [
-            'title' => 'required',
             'marchandise_id' => 'required',
             'user_id' => 'required',
         ]);
 
         if($v->fails()) return response()->json($v->errors(), 400);
-        $data = new Annonce();
-            $data->title = $request->title;
+            $data = new Annonce();
+            $data->code = Annonce::getCode();
             $data->marchandise_id = $request->marchandise_id;
             $data->user_id = $request->user_id;
 
+            $data->title = $request->title ? $request->title : null;
+            $data->montant = $request->montant ? $request->montant : null;
+            $data->montant_k = $request->montant_k ? $request->montant_k : null;
             $data->body = $request->body ? $request->body : null;
             $data->payload = $request->payload ? $request->payload : null;
             $data->is_public = $request->is_public ? $request->is_public : true;
@@ -96,8 +101,11 @@ class AnnonceController extends Controller
             DB::beginTransaction();
                 $data->save();
                 Marchandise::find($request->marchandise_id)->update(['status' => 1]);
-                event(new AnnonceEvent(new AnnonceResource($data)));
             DB::commit();
+
+            try{
+                event(new AnnonceEvent(new AnnonceResource($data)));
+            }catch(Exception $e){}
 
         return response()->json(new AnnonceResource($data), 201);
     }
