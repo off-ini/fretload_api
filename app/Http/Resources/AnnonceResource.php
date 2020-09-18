@@ -19,6 +19,7 @@ class AnnonceResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'body' => $this->body,
+            'montant' => $this->montant,
             'payload' => $this->payload,
             'is_public' => $this->is_public,
             'marchandise' => new MarchandiseResource($this->marchandise),
