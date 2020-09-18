@@ -17,7 +17,7 @@ class PermissionTableSeeder extends Seeder
         ]);
 
         DB::table('permissions')->insert([
-            'tag' => 'READ',
+            'tag' => 'SELECT',
         ]);
 
         DB::table('permissions')->insert([
