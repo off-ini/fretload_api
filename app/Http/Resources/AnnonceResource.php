@@ -26,6 +26,7 @@ class AnnonceResource extends JsonResource
             'owner_id' => $this->user_id,
             'owner' => new UserShowResource($this->user),
             'user_sigle' => $this->user_sigle,
+            'created_at' => $this->created_at,
         ];
     }
 }

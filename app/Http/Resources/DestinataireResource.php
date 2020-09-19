@@ -27,6 +27,7 @@ class DestinataireResource extends JsonResource
             'photo' => $this->photo,
             'ville' => new VilleResource($this->ville),
             'pays' => new PaysResource($this->ville->pays),
+            'created_at' => $this->created_at,
         ];
     }
 }

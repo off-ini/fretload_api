@@ -32,6 +32,7 @@ class MissionResource extends JsonResource
             'chauffeurs' => UserShowResource::collection($this->chauffeurs),
             'vehicules' => VehiculeResource::collection($this->vehicules),
             'proprietaire' => $this->user_p_id,
+            'created_at' => $this->created_at,
         ];
     }
 }

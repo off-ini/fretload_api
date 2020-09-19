@@ -24,6 +24,7 @@ class AdresseResource extends JsonResource
             'latitude' => $this->latitude,
             'ville' => new VilleResource($this->ville),
             'pays' => new PaysResource($this->ville->pays),
+            'created_at' => $this->created_at,
         ];
     }
 }

@@ -30,6 +30,7 @@ class MarchandiseResource extends JsonResource
             'adresse_arriver' => new AdresseResource($this->adresse_arriver),
             'destinataire' => new DestinataireResource($this->destinataire),
             'type' => new TypeMarchandiseResource($this->type_marchandie),
+            'created_at' => $this->created_at,
         ];
     }
 }

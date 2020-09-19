@@ -33,6 +33,7 @@ class UserResource extends JsonResource
             'roles' => RoleResource::collection($this->roles),
             //'permissions' => PermissionResource::collection($this->role_users->permissions),
             'username' => $this->username,
+            'created_at' => $this->created_at,
         ];
     }
 }
