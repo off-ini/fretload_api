@@ -150,7 +150,19 @@ class PropositionController extends Controller
         else
         {
 
-            $data->update($request->all());
+            $data->update([
+                'montant' => $request->montant ? $request->montant : $data->montant,
+                'annonce_id' => $request->annonce_id ? $request->annonce_id  : $data->annonce_id,
+                'user_id' => $request->user_id ? $request->user_id : $data->user_id,
+                'status' => $request->status ? $request->status : $data->status,
+                'is_read' => $request->is_read ? $request->is_read : $data->is_read,
+                'accepted_at' => $request->accepted_at ? $request->accepted_at : $data->accepted_at,
+            ]);
+
+            if($request->vehicule_ids)
+            {
+                $data->vehicules()->sync($request->vehicule_ids);
+            }
 
             $user = Annonce::find($annonce_id)->user;
 

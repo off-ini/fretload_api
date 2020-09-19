@@ -29,4 +29,10 @@ class Proposition extends Model
     {
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    public function vehicules()
+    {
+        return $this->belongsToMany('App\Vehicule', 'propositions', 'proposition_id', 'vehicule_id')
+                    ->withTimestamps();
+    }
 }

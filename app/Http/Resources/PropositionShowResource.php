@@ -26,6 +26,7 @@ class PropositionShowResource extends JsonResource
             'accepted_at' => $this->accepted_at,
             'status' => $this->status,
             'annonce' => new AnnonceResource($this->annonce),
+            'vehicules' => VehiculeResource::collection($this->vehicules),
             'user' => new UserShowResource($this->user),
         ];
     }
