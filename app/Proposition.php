@@ -32,7 +32,7 @@ class Proposition extends Model
 
     public function vehicules()
     {
-        return $this->belongsToMany('App\Vehicule', 'propositions', 'proposition_id', 'vehicule_id')
+        return $this->belongsToMany('App\Vehicule', 'proposition_vehicule', 'proposition_id', 'vehicule_id')
                     ->withTimestamps();
     }
 }
