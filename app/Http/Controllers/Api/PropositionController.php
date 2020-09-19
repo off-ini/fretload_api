@@ -124,6 +124,14 @@ class PropositionController extends Controller
         return response()->json(new PropositionShowResource($data), 200);
     }
 
+    public function showByAnnonceAndUser($annonce_id, $user_id)
+    {
+        $data = Proposition::where(['annonce_id' => $annonce_id, 'user_id' => $user_id])->first();
+        if(is_null($data))
+            return response()->json(['error' => 'Resource introuvable'], 404);
+        return response()->json(new PropositionResource($data), 200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

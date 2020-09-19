@@ -18,6 +18,7 @@ Route::group(['middleware' => 'jwt', 'prefix' => $v1Prefix], function () {
     Route::get('marchandises/selected', 'Api\MarchandiseController@selected');
 
     // Proposition
+    Route::get('propositions/{annonce_id}/{user_id}', 'Api\PropositionController@showByAnnonceAndUser');
     Route::put('propositions/{annonce_id}/{user_id}', 'Api\PropositionController@update');
     Route::get('propositions/accept/{id}', 'Api\PropositionController@accept');
 
