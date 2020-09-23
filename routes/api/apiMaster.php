@@ -31,6 +31,9 @@ Route::group(['middleware' => 'jwt', 'prefix' => $v1Prefix], function () {
     // Annonces
     Route::get('annonces/news', 'Api\AnnonceController@all_news');
 
+    // Missions
+    Route::get('missions/statistics', 'Api\MissionController@allCount');
+
 
     // CRUD Base
     Route::apiResource('users', 'Api\UserController');

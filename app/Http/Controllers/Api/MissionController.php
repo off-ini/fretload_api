@@ -37,6 +37,39 @@ class MissionController extends Controller
         }
     }
 
+    public function allCount()
+    {
+        $user = Auth::user();
+        $role = $user->roles[0];
+
+        $all = 0;
+        $load = 0;
+        $end = 0;
+        $paided = 0;
+
+        if($role->id == 2)
+        {
+            $all = Mission::where(['user_p_id' => $user->id])->get()->count();
+            $load = Mission::where(['user_p_id' => $user->id, 'status' => 1])->get()->count();
+            $end = Mission::where(['user_p_id' => $user->id, 'status' => 2])->get()->count();
+            $paided = Mission::where(['user_p_id' => $user->id, 'status' => 3])->get()->count();
+
+        }else if($role->id >= 3 || $role->id == 4)
+        {
+            $all = Mission::where(['id' => $user->id])->get()->count();
+            $load = Mission::where(['id' => $user->id, 'status' => 1])->get()->count();
+            $end = Mission::where(['id' => $user->id, 'status' => 2])->get()->count();
+            $paided = Mission::where(['id' => $user->id, 'status' => 3])->get()->count();
+        }
+
+        return response()->json([
+            'MAll' => $all,
+            'MLoad' => $load,
+            'MEnd' => $end,
+            'MPaided' => $paided
+        ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
