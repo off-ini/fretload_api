@@ -63,10 +63,10 @@ class MissionController extends Controller
         }
 
         return response()->json([
-            'MAll' => $all,
-            'MLoad' => $load,
-            'MEnd' => $end,
-            'MPaided' => $paided
+            'all' => $all,
+            'load' => $load,
+            'end' => $end,
+            'paided' => $paided
         ], 200);
     }
 
