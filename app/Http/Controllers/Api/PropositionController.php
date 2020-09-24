@@ -159,7 +159,8 @@ class PropositionController extends Controller
         {
 
             $data->update([
-                'montant' => $request->montant ? $request->montant : $data->montant,
+                'montant_t' => $request->montant_t ? $request->montant_t : $data->montant_t,
+                'montant_p' => $request->montant_p ? $request->montant_p : $data->montant_p,
                 'annonce_id' => $request->annonce_id ? $request->annonce_id  : $data->annonce_id,
                 'user_id' => $request->user_id ? $request->user_id : $data->user_id,
                 'status' => $request->status ? $request->status : $data->status,
