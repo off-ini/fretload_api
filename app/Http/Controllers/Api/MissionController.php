@@ -61,6 +61,7 @@ class MissionController extends Controller
             $end = Mission::where(['id' => $user->id, 'status' => 2])->get()->count();
             $paided = Mission::where(['id' => $user->id, 'status' => 3])->get()->count();
         }else if($role->id == 4){
+            return response()->json([],200);
             $all = Mission::whereHas('chauffeurs', function($query) use ($user){
                                 return $query->where('id',$user->id);
                             })->get()->count();
