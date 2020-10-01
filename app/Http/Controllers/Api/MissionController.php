@@ -37,8 +37,8 @@ class MissionController extends Controller
         }else if($role->id >= 4)
         {
             $data = Mission::whereHas('chauffeurs', function($query) use ($user){
-                return $query->where('id',$user->id);
-            })->orderBy('created_at', 'DESC')->paginate(6);
+                return $query->where('chauffeurs.id',$user->id);
+            })->orderBy('missions.created_at', 'DESC')->paginate(6);
 
         }return MissionResource::collection($data);
     }
@@ -69,17 +69,17 @@ class MissionController extends Controller
         }else if($role->id >= 4){
             return response()->json([],200);
             $all = Mission::whereHas('chauffeurs', function($query) use ($user){
-                                return $query->where('id',$user->id);
+                                return $query->where('chauffeurs.id',$user->id);
                             })->get()->count();
             $load = Mission::whereHas('chauffeurs', function($query) use ($user){
-                                return $query->where('id',$user->id);
-                            })->where(['status' => 1])->get()->count();
+                                return $query->where('chauffeurs.id',$user->id);
+                            })->where(['missions.status' => 1])->get()->count();
             $end = Mission::whereHas('chauffeurs', function($query) use ($user){
-                                return $query->where('id',$user->id);
-                            })->where(['status' => 2])->get()->count();
+                                return $query->where('chauffeurs.id',$user->id);
+                            })->where(['missions.status' => 2])->get()->count();
             $paided = Mission::whereHas('chauffeurs', function($query) use ($user){
-                                return $query->where('id',$user->id);
-                            })->where(['status' => 3])->get()->count();
+                                return $query->where('chauffeurs.id',$user->id);
+                            })->where(['missions.status' => 3])->get()->count();
         }
 
         return response()->json([
