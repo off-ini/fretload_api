@@ -54,12 +54,25 @@ class MissionController extends Controller
             $end = Mission::where(['user_p_id' => $user->id, 'status' => 2])->get()->count();
             $paided = Mission::where(['user_p_id' => $user->id, 'status' => 3])->get()->count();
 
-        }else if($role->id >= 3 || $role->id == 4)
+        }else if($role->id >= 3)
         {
             $all = Mission::where(['id' => $user->id])->get()->count();
             $load = Mission::where(['id' => $user->id, 'status' => 1])->get()->count();
             $end = Mission::where(['id' => $user->id, 'status' => 2])->get()->count();
             $paided = Mission::where(['id' => $user->id, 'status' => 3])->get()->count();
+        }else if($role->id == 4){
+            $all = Mission::whereHas('chauffeurs', function($query) use ($user){
+                                return $query->where('id',$user->id);
+                            })->get()->count();
+            $load = Mission::whereHas('chauffeurs', function($query) use ($user){
+                                return $query->where('id',$user->id);
+                            })->where(['status' => 1])->get()->count();
+            $end = Mission::whereHas('chauffeurs', function($query) use ($user){
+                                return $query->where('id',$user->id);
+                            })->where(['status' => 2])->get()->count();
+            $paided = Mission::whereHas('chauffeurs', function($query) use ($user){
+                                return $query->where('id',$user->id);
+                            })->where(['status' => 3])->get()->count();
         }
 
         return response()->json([
@@ -104,6 +117,7 @@ class MissionController extends Controller
         if($v->fails()) return response()->json($v->errors(), 400);
         $data = new Mission();
             $data->code = Mission::getCode();
+            $data->code_livraison = Mission::getCodeL();
             $data->title = $request->title;
             $data->montant = $request->montant;
             $data->date_depart_pre = date("Y-m-d", strtotime($request->date_depart_pre));
@@ -200,6 +214,54 @@ class MissionController extends Controller
             DB::commit();
 
             return response()->json(new MissionResource($data), 200);
+        }
+    }
+
+    public function upEnCours(Request $request, $id)
+    {
+        $data = Mission::find($id);
+        if(is_null($data))
+            return response()->json(['error' => 'Resource introuvable'], 404);
+        else
+        {
+            $data->update([
+                'status' => 1,
+                'bordoreau_c' => $request->bordoreau_c ? $request->bordoreau_c : null
+            ]);
+        }
+    }
+
+    public function upLivrer(Request $request, $id)
+    {
+        $data = Mission::find($id);
+        if(is_null($data))
+            return response()->json(['error' => 'Resource introuvable'], 404);
+        else
+        {
+            if(isset($request->code_livraison) && $data->code_livraison != $request->code_livraison)
+            {
+                return response()->json(['error' => 'Code Incorrect'], 400);
+            }
+            DB::beginTransaction();
+                $data->update([
+                    'status' => 2,
+                    'bordoreau_l' => $request->bordoreau_l ? $request->bordoreau_l : null
+                ]);
+
+                $data->vehicules->update(['status' => 0]);
+                $data->chauffeurs->update(['status' => 0]);
+            DB::commit();
+        }
+    }
+
+    public function upPayer(Request $request, $id)
+    {
+        $data = Mission::find($id);
+        if(is_null($data))
+            return response()->json(['error' => 'Resource introuvable'], 404);
+        else
+        {
+
         }
     }
 

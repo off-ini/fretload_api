@@ -26,6 +26,12 @@ class Mission extends Model
         return $key;
     }
 
+    public static function getCodeL()
+    {
+        $key = Str::upper(Str::random(4));
+        return $key;
+    }
+
     public function marchandise()
     {
         return $this->belongsTo('App\Marchandise', 'marchandise_id');

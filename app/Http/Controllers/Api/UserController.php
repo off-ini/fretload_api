@@ -103,7 +103,9 @@ class UserController extends Controller
             $to_email = $data->email;
             $sender = 'offridamjc@gmail.com';
             $sender_name = 'FreatLoad';
+
             $data = ['user'=> $data, "link" => $link];
+
             Mail::send('emails/mail_active', $data,
             function($message) use ($to_name, $to_email, $sender, $sender_name) {
                 $message->to($to_email, $to_name)

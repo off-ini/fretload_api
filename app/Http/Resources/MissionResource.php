@@ -18,6 +18,8 @@ class MissionResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'code' => $this->code,
+            'code_livraison' => $this->code_livraison,
             'title' => $this->title,
             'description' => $this->description,
             'montant' => $this->montant,
@@ -25,6 +27,8 @@ class MissionResource extends JsonResource
             'date_depart_eff' => $this->date_depart_eff,
             'date_arriver_pre' => $this->date_arriver_pre,
             'date_arriver_eff' => $this->date_arriver_eff,
+            'bordoreau_c' => $this->bordoreau_c,
+            'bordoreau_l' => $this->bordoreau_l,
             'status' => $this->status,
             'marchandise' => new MarchandiseResource($this->marchandise),
             'destinataire' => new DestinataireResource($this->destinataire),

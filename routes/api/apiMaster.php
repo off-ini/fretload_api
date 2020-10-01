@@ -33,6 +33,9 @@ Route::group(['middleware' => 'jwt', 'prefix' => $v1Prefix], function () {
 
     // Missions
     Route::get('missions/statistics', 'Api\MissionController@allCount');
+    Route::get('missions/up/encours/{id}', 'Api\MissionController@upEnCours');
+    Route::get('missions/up/livrer/{id}', 'Api\MissionController@upLivrer');
+    Route::get('missions/up/payer/{id}', 'Api\MissionController@upPayer');
 
 
     // CRUD Base
