@@ -31,10 +31,16 @@ class MissionController extends Controller
         if($role->id == 2)
         {
             return MissionResource::collection(Mission::where(['user_p_id' => $user->id])->orderBy('created_at', 'DESC')->paginate(6));
-        }else if($role->id >= 3)
+        }else if($role->id == 3)
         {
             return MissionResource::collection(Mission::where(['user_id' => $user->id])->orderBy('created_at', 'DESC')->paginate(6));
-        }
+        }else if($role->id >= 4)
+        {
+            $data = Mission::whereHas('chauffeurs', function($query) use ($user){
+                return $query->where('id',$user->id);
+            })->orderBy('created_at', 'DESC')->paginate(6);
+
+        }return MissionResource::collection($data);
     }
 
     public function allCount()
@@ -54,13 +60,13 @@ class MissionController extends Controller
             $end = Mission::where(['user_p_id' => $user->id, 'status' => 2])->get()->count();
             $paided = Mission::where(['user_p_id' => $user->id, 'status' => 3])->get()->count();
 
-        }else if($role->id >= 3)
+        }else if($role->id == 3)
         {
             $all = Mission::where(['user_id' => $user->id])->get()->count();
             $load = Mission::where(['user_id' => $user->id, 'status' => 1])->get()->count();
             $end = Mission::where(['user_id' => $user->id, 'status' => 2])->get()->count();
             $paided = Mission::where(['user_id' => $user->id, 'status' => 3])->get()->count();
-        }else if($role->id == 4){
+        }else if($role->id >= 4){
             return response()->json([],200);
             $all = Mission::whereHas('chauffeurs', function($query) use ($user){
                                 return $query->where('id',$user->id);
