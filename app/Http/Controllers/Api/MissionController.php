@@ -56,7 +56,6 @@ class MissionController extends Controller
 
         }else if($role->id >= 3)
         {
-            return response()->json([],200);
             $all = Mission::where(['id' => $user->id])->get()->count();
             $load = Mission::where(['id' => $user->id, 'status' => 1])->get()->count();
             $end = Mission::where(['id' => $user->id, 'status' => 2])->get()->count();
