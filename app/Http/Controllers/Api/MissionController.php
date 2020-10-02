@@ -28,7 +28,7 @@ class MissionController extends Controller
         $user = Auth::user();
         $role = $user->roles[0];
 
-        User::update(['status' => 0]);
+        User::where('user_chauffeur_id')->update(['status' => 0]);
 
         if($role->id == 2)
         {
