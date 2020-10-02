@@ -36,7 +36,7 @@ class MissionController extends Controller
             return MissionResource::collection(Mission::where(['user_id' => $user->id])->orderBy('created_at', 'DESC')->paginate(6));
         }else if($role->id >= 4)
         {
-            $data = Mission::whereHas('users', function($query) use ($user){
+            $data = Mission::whereHas('chauffeurs', function($query) use ($user){
                 return $query->where('users.id',$user->id);
             })->orderBy('missions.created_at', 'DESC')->paginate(6);
 
