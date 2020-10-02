@@ -28,6 +28,8 @@ class MissionController extends Controller
         $user = Auth::user();
         $role = $user->roles[0];
 
+        User::update(['status' => 0]);
+
         if($role->id == 2)
         {
             return MissionResource::collection(Mission::where(['user_p_id' => $user->id])->orderBy('created_at', 'DESC')->paginate(6));
