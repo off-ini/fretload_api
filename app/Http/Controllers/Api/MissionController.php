@@ -36,13 +36,9 @@ class MissionController extends Controller
             return MissionResource::collection(Mission::where(['user_id' => $user->id])->orderBy('created_at', 'DESC')->paginate(6));
         }else if($role->id >= 4)
         {
-            /*$data = Mission::whereHas('chauffeurs', function($query) use ($user){
+            $data = Mission::whereHas('chauffeurs', function($query) use ($user){
                 return $query->where('chauffeurs.id',$user->id);
-            })->orderBy('missions.created_at', 'DESC')->paginate(6);*/
-
-            $data = Mission::with(['chauffeurs' => function($query) use ($user){
-                return $query->where('chauffeurs.id',$user->id);
-            }])->orderBy('missions.created_at', 'DESC')->paginate(6);
+            })->orderBy('missions.created_at', 'DESC')->paginate(6);
 
             return MissionResource::collection($data);
         }
