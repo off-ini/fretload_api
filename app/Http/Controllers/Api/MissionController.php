@@ -40,7 +40,7 @@ class MissionController extends Controller
                 return $query->where('chauffeurs.id',$user->id);
             })->orderBy('missions.created_at', 'DESC')->paginate(6);*/
 
-            $data = Mission::with(['chauffeur_mission', 'chauffeurs' => function($query) use ($user){
+            $data = Mission::with(['chauffeurs' => function($query) use ($user){
                 return $query->where('chauffeurs.id',$user->id);
             }])->orderBy('missions.created_at', 'DESC')->paginate(6);
 
