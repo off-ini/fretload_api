@@ -8,8 +8,8 @@ use App\Http\Resources\MarchandiseResource;
 use App\Http\Resources\MarchandiseSelectResource;
 use App\Marchandise;
 use Illuminate\Http\Request;
-use Validator;
-use Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class MarchandiseController extends Controller
 {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\NotificationEvent;
+use App\File;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MissionResource;
 use App\Mission;
@@ -232,10 +233,17 @@ class MissionController extends Controller
             return response()->json(['error' => 'Resource introuvable'], 404);
         else
         {
+            if($request->bordoreau_c)
+            {
+                $bordoreau_c = File::write($request->bordoreau_c);
+            }
+
             $data->update([
                 'status' => 1,
-                'bordoreau_c' => $request->bordoreau_c ? $request->bordoreau_c : null
+                'bordoreau_c' => $bordoreau_c ? $bordoreau_c : null,
+                'date_depart_eff' => date("Y-m-d H:i:s", strtotime(now())),
             ]);
+            return response()->json(new MissionResource($data), 200);
         }
     }
 
@@ -250,15 +258,23 @@ class MissionController extends Controller
             {
                 return response()->json(['error' => 'Code Incorrect'], 400);
             }
+
+            if($request->bordoreau_l)
+            {
+                $bordoreau_l = File::write($request->bordoreau_l);
+            }
+
             DB::beginTransaction();
                 $data->update([
                     'status' => 2,
-                    'bordoreau_l' => $request->bordoreau_l ? $request->bordoreau_l : null
+                    'bordoreau_l' => $bordoreau_l  ? $bordoreau_l : null,
+                    'date_arriver_eff' => date("Y-m-d H:i:s", strtotime(now())),
                 ]);
 
                 $data->vehicules->update(['status' => 0]);
                 $data->chauffeurs->update(['status' => 0]);
             DB::commit();
+            return response()->json(new MissionResource($data), 200);
         }
     }
 
