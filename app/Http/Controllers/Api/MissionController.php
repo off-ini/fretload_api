@@ -229,6 +229,7 @@ class MissionController extends Controller
     public function upEnCours(Request $request, $id)
     {
         $data = Mission::find($id);
+        $bordoreau_c = null;
         if(is_null($data))
             return response()->json(['error' => 'Resource introuvable'], 404);
         else
@@ -250,6 +251,7 @@ class MissionController extends Controller
     public function upLivrer(Request $request, $id)
     {
         $data = Mission::find($id);
+        $bordoreau_l = null;
         if(is_null($data))
             return response()->json(['error' => 'Resource introuvable'], 404);
         else
