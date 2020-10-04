@@ -250,11 +250,11 @@ class MissionController extends Controller
 
     public function upLivrer(Request $request, $id)
     {
-        /*$v = Validator::make($request->all(), [
+        $v = Validator::make($request->all(), [
             'code_livraison' => 'required',
         ]);
 
-        if($v->fails()) return response()->json($v->errors(), 400);*/
+        if($v->fails()) return response()->json($v->errors(), 400);
 
         $data = Mission::find($id);
         $bordoreau_l = null;
