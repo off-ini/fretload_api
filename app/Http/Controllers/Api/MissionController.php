@@ -250,13 +250,19 @@ class MissionController extends Controller
 
     public function upLivrer(Request $request, $id)
     {
+        $v = Validator::make($request->all(), [
+            'code_livraison' => 'required',
+        ]);
+
+        if($v->fails()) return response()->json($v->errors(), 400);
+
         $data = Mission::find($id);
         $bordoreau_l = null;
         if(is_null($data))
             return response()->json(['error' => 'Resource introuvable'], 404);
         else
         {
-            if(isset($request->code_livraison) && $data->code_livraison != $request->code_livraison)
+            if($data->code_livraison != $request->code_livraison)
             {
                 return response()->json(['error' => 'Code Incorrect'], 400);
             }
@@ -273,8 +279,14 @@ class MissionController extends Controller
                     'date_arriver_eff' => date("Y-m-d H:i:s", strtotime(now())),
                 ]);
 
-                $data->vehicules->update(['status' => 0]);
-                $data->chauffeurs->update(['status' => 0]);
+                foreach($data->vehicules as $vehicule){
+                    $vehicule->update(['status' => 0]);
+                }
+
+                foreach($data->chauffeurs as $chauffeur){
+                    $chauffeur->update(['status' => 0]);
+                }
+
             DB::commit();
             return response()->json(new MissionResource($data), 200);
         }
