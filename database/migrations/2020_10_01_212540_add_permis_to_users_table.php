@@ -15,7 +15,7 @@ class AddPermisToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('permis_recto')->nullable()->after('photo');
-            $table->string('permis_verso')->nullable()->after('permis_verso');
+            $table->string('permis_verso')->nullable()->after('permis_recto');
         });
     }
 

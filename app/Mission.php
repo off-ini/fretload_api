@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Twilio\Rest\Client;
 
 class Mission extends Model
 {
@@ -30,6 +32,22 @@ class Mission extends Model
     {
         $key = Str::upper(Str::random(4));
         return $key;
+    }
+
+    public static function sendMessage($message, $recipients)
+    {
+        $account_sid = getenv("TWILIO_SID");
+        $auth_token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio_number = getenv("TWILIO_NUMBER");
+        try{
+            $client = new Client($account_sid, $auth_token);
+            $client->messages->create($recipients,
+            ['from' => $twilio_number, 'body' => $message] );
+            return true;
+        }catch(Exception $e)
+        {
+            return false;
+        }
     }
 
     public function marchandise()

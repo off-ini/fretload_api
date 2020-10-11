@@ -287,6 +287,11 @@ class MissionController extends Controller
                     $chauffeur->update(['status' => 0]);
                 }
 
+                $msg = "Votre marchandise " . $data->marchandise->libelle . "viens d'être livrée";
+                $phone = $data->proprietaire->phone;
+
+                Mission::sendMessage($phone, $msg);
+
             DB::commit();
             return response()->json(new MissionResource($data), 200);
         }
