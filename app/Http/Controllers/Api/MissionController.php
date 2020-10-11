@@ -288,7 +288,7 @@ class MissionController extends Controller
                 }
 
                 $msg = "Votre marchandise " . $data->marchandise->libelle . "viens d'être livrée";
-                $phone = $data->proprietaire->pays->phone_code.$data->proprietaire->phone;
+                $phone = '228'.$data->proprietaire->phone;
 
                 Mission::sendMessage($phone, $msg);
 
