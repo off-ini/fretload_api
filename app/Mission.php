@@ -39,15 +39,15 @@ class Mission extends Model
         $account_sid = getenv("TWILIO_SID");
         $auth_token = getenv("TWILIO_AUTH_TOKEN");
         $twilio_number = getenv("TWILIO_NUMBER");
-        try{
+        //try{
             $client = new Client($account_sid, $auth_token);
             $client->messages->create($recipients,
             ['from' => $twilio_number, 'body' => $message] );
             return true;
-        }catch(Exception $e)
+        /*}catch(Exception $e)
         {
             return false;
-        }
+        }*/
     }
 
     public function marchandise()
