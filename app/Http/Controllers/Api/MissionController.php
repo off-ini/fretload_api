@@ -290,9 +290,7 @@ class MissionController extends Controller
                 $msg = "Votre marchandise " . $data->marchandise->libelle . "viens d'être livrée";
                 $phone = '+228'.$data->proprietaire->phone;
 
-                return response()->json($phone, 200);;
-
-                Mission::sendMessage($phone, $msg);
+                Mission::sendMessage($msg,$phone);
 
             DB::commit();
             return response()->json(new MissionResource($data), 200);
