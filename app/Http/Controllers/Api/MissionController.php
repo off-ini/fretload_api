@@ -150,6 +150,15 @@ class MissionController extends Controller
                 User::whereIn('id', $request->chauffeur_ids)->update(['status' => 1]);
                 Proposition::find($request->proposition_id)->update(['is_mission' => true]);
 
+                $msgP = "Votre marchandise [" . $data->marchandise->libelle . "] est en cours de mission \n Date debut : ". date("Y M d ", strtotime($data->date_depart_pre))."\n Date fin : " . date("Y M d ", strtotime($data->date_arriver_pre));
+                $phoneP = '+228'.$data->proprietaire->phone;
+
+                $msgC = "Une mission de transport vous a été attributé [Livraison de " . $data->marchandise->libelle . "] \n Date debut : ". date("Y M d ", strtotime($data->date_depart_pre))."\n Date fin : " . date("Y M d ", strtotime($data->date_arriver_pre));
+                $phoneC = '+228'.$data->chauffeurs[0]->phone;
+
+                Mission::sendMessage($msgP,$phoneP);
+                Mission::sendMessage($msgC,$phoneC);
+
             DB::commit();
 
             try{
@@ -244,6 +253,12 @@ class MissionController extends Controller
                 'bordoreau_c' => $bordoreau_c ? $bordoreau_c : null,
                 'date_depart_eff' => date("Y-m-d H:i:s", strtotime(now())),
             ]);
+
+            $msgD = "Mission de livraison \n[Livraison de " . $data->marchandise->libelle . "] \n Livraison prévu : " . date("Y M d ", strtotime($data->date_arriver_pre)). " \n Code : " . $data->code;
+            $phoneD = '+228'.$data->destinataire->phone;
+
+            Mission::sendMessage($msgD,$phoneD);
+
             return response()->json(new MissionResource($data), 200);
         }
     }
@@ -287,7 +302,7 @@ class MissionController extends Controller
                     $chauffeur->update(['status' => 0]);
                 }
 
-                $msg = "Votre marchandise " . $data->marchandise->libelle . "viens d'être livrée";
+                $msg = "Votre marchandise [" . $data->marchandise->libelle . "] viens d'être livrée";
                 $phone = '+228'.$data->proprietaire->phone;
 
                 Mission::sendMessage($msg,$phone);
