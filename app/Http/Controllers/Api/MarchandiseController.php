@@ -68,6 +68,7 @@ class MarchandiseController extends Controller
 
             $data->description = $request->description ? $request->description : null;
             $data->poid = $request->poid ? $request->poid : null;
+            $data->status = $request->status ? $request->status : 0;
             $data->volume = $request->volume ? $request->volume : null;
             $data->qte = $request->qte ? $request->qte : null;
 
