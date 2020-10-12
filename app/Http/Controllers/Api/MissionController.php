@@ -151,7 +151,7 @@ class MissionController extends Controller
                 Vehicule::whereIn('id', $request->vehicule_ids)->update(['status' => 1]);
                 User::whereIn('id', $request->chauffeur_ids)->update(['status' => 1]);
                 Proposition::find($request->proposition_id)->update(['is_mission' => true]);
-                Marchandise::find($data->marchandise_id)->update(['status' => 1]);
+                Marchandise::find($data->marchandise_id)->update(['status' => 2]);
 
                 $msgP = "Votre marchandise [" . $data->marchandise->libelle . "] est en cours de mission \n Date debut : ". date("Y M d ", strtotime($data->date_depart_pre))."\n Date fin : " . date("Y M d ", strtotime($data->date_arriver_pre));
                 $phoneP = '+228'.$data->proprietaire->phone;
@@ -305,7 +305,7 @@ class MissionController extends Controller
                     $chauffeur->update(['status' => 0]);
                 }
 
-                Marchandise::find($data->marchandise_id)->update(['status' => 2]);
+                Marchandise::find($data->marchandise_id)->update(['status' => 3]);
 
                 $msg = "Votre marchandise [" . $data->marchandise->libelle . "] viens d'être livrée";
                 $phone = '+228'.$data->proprietaire->phone;
