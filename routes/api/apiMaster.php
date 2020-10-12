@@ -36,6 +36,7 @@ Route::group(['middleware' => 'jwt', 'prefix' => $v1Prefix], function () {
     Route::post('missions/up/encours/{id}', 'Api\MissionController@upEnCours');
     Route::post('missions/up/livrer/{id}', 'Api\MissionController@upLivrer');
     Route::post('missions/up/payer/{id}', 'Api\MissionController@upPayer');
+    Route::post('missions/paiding/{user_id}/{mission_id}', 'Api\MissionController@paiding');
 
 
     // CRUD Base

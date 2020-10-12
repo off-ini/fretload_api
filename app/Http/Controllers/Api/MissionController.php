@@ -328,6 +328,18 @@ class MissionController extends Controller
         }
     }
 
+    public function paiding(Request $request, $user_id, $mission_id){
+        User::find($user_id)->update([
+            'paiding' => 1
+        ]);
+
+        Mission::find($mission_id)->update([
+            'paiding' => 1
+        ]);
+
+        return response()->json('OK', 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

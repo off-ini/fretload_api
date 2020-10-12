@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             'adresse' => $this->adresse,
             'photo' => $this->photo,
             'status' => $this->status,
+            'paiding' => $this->paiding,
             'ville' => new VilleResource($this->ville),
             'pays' => new PaysResource($this->ville->pays),
             'roles' => RoleResource::collection($this->roles),

@@ -30,6 +30,7 @@ class MissionResource extends JsonResource
             'bordoreau_c' => $this->bordoreau_c,
             'bordoreau_l' => $this->bordoreau_l,
             'status' => $this->status,
+            'paiding' => $this->paiding,
             'marchandise' => new MarchandiseResource($this->marchandise),
             'destinataire' => new DestinataireResource($this->destinataire),
             'proposition' => new PropositionResource($this->proposition),
