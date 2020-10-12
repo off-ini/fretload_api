@@ -19,6 +19,7 @@ class PropositionShowResource extends JsonResource
         return [
             'id' => $this->id,
             'montant_t' => $this->montant_t,
+            'montant_p' => $this->montant_p,
             'status' => $this->status,
             'is_read' => $this->is_read,
             'is_accept' => $this->is_accept,
