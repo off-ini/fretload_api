@@ -24,6 +24,7 @@ class PropositionResource extends JsonResource
             'is_accept' => $this->is_accept,
             'is_mission' => $this->is_mission,
             'accepted_at' => $this->accepted_at,
+            'user_id' => $this->user_id,
             'status' => Proposition::$status[$this->status],
             'annonce' => new AnnonceResource($this->annonce),
             'vehicules' => VehiculeResource::collection($this->vehicules),

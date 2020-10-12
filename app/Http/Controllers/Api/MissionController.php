@@ -6,6 +6,7 @@ use App\Events\NotificationEvent;
 use App\File;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MissionResource;
+use App\Marchandise;
 use App\Mission;
 use App\Notifications\MissionNotification;
 use App\Proposition;
@@ -142,6 +143,7 @@ class MissionController extends Controller
             $data->user_p_id = $request->user_p_id ? $request->user_p_id : null;
 
             DB::beginTransaction();
+
                 $data->save();
                 $data->vehicules()->sync($request->vehicule_ids);
                 $data->chauffeurs()->sync($request->chauffeur_ids);
@@ -149,6 +151,7 @@ class MissionController extends Controller
                 Vehicule::whereIn('id', $request->vehicule_ids)->update(['status' => 1]);
                 User::whereIn('id', $request->chauffeur_ids)->update(['status' => 1]);
                 Proposition::find($request->proposition_id)->update(['is_mission' => true]);
+                Marchandise::find($data->marchandise_id)->update(['status' => 1]);
 
                 $msgP = "Votre marchandise [" . $data->marchandise->libelle . "] est en cours de mission \n Date debut : ". date("Y M d ", strtotime($data->date_depart_pre))."\n Date fin : " . date("Y M d ", strtotime($data->date_arriver_pre));
                 $phoneP = '+228'.$data->proprietaire->phone;
@@ -254,7 +257,7 @@ class MissionController extends Controller
                 'date_depart_eff' => date("Y-m-d H:i:s", strtotime(now())),
             ]);
 
-            $msgD = "Mission de livraison \n[Livraison de " . $data->marchandise->libelle . "] \n Livraison prévu : " . date("Y M d ", strtotime($data->date_arriver_pre)). " \n Code : " . $data->code;
+            $msgD = "Mission de livraison \n[Livraison de " . $data->marchandise->libelle . "] \n Livraison prévu : " . date("Y M d ", strtotime($data->date_arriver_pre)). " \n Code : " . $data->code_livraison;
             $phoneD = '+228'.$data->destinataire->phone;
 
             Mission::sendMessage($msgD,$phoneD);
@@ -301,6 +304,8 @@ class MissionController extends Controller
                 foreach($data->chauffeurs as $chauffeur){
                     $chauffeur->update(['status' => 0]);
                 }
+
+                Marchandise::find($data->marchandise_id)->update(['status' => 2]);
 
                 $msg = "Votre marchandise [" . $data->marchandise->libelle . "] viens d'être livrée";
                 $phone = '+228'.$data->proprietaire->phone;
