@@ -16,8 +16,8 @@ class PayementConroller extends Controller
      */
     public function index(Request $request)
     {
-        $mission = Mission::where(['pading' => 1])->last();
-        $user = User::where(['pading' => 1])->last();
+        $mission = Mission::where(['pading' => 1])->first();
+        $user = User::where(['pading' => 1])->first();
         dd(['all' => $request->all(), 'mission' => $mission, 'user' => $user]);
     }
 
