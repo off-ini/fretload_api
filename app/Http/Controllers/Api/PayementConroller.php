@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mission;
+use App\User;
 use Illuminate\Http\Request;
 
 class PayementConroller extends Controller
@@ -15,8 +16,9 @@ class PayementConroller extends Controller
      */
     public function index(Request $request)
     {
-        Mission::where(['pading' => 1])->last();
-        dd($request->all());
+        $mission = Mission::where(['pading' => 1])->last();
+        $user = User::where(['pading' => 1])->last();
+        dd(['all' => $request->all(), 'mission' => $mission, 'user' => $user]);
     }
 
     /**
