@@ -37,7 +37,7 @@ class PayementConroller extends Controller
                 'user_id' => $user->id
             ]);
 
-            $msg = "La livraison de [ " . $mission->marchandise->libelle . " ]  La été payer ";
+            $msg = "La livraison de [ " . $mission->marchandise->libelle . " ]  a ete payer ";
             $phone = '+228'.$mission->transpoteur->phone;
 
             Mission::sendMessage($msg,$phone);
