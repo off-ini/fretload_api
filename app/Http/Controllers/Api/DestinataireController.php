@@ -136,7 +136,7 @@ class DestinataireController extends Controller
             $request->ville_id ? $data->ville_id = $request->ville_id : null;
             $request->user_id? $data->user_id = $request->user_id : null;*/
 
-            if($all['photo'])
+            if(isset($all['photo']) && $all['photo'])
             {
                 $name = File::write($all['photo']);
                 if($name)
