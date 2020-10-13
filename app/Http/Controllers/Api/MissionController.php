@@ -46,6 +46,27 @@ class MissionController extends Controller
         }
     }
 
+    public function all()
+    {
+        $user = Auth::user();
+        $role = $user->roles[0];
+
+        if($role->id == 2)
+        {
+            return MissionResource::collection(Mission::where(['user_p_id' => $user->id])->orderBy('created_at', 'DESC')->get());
+        }else if($role->id == 3)
+        {
+            return MissionResource::collection(Mission::where(['user_id' => $user->id])->orderBy('created_at', 'DESC')->get());
+        }else if($role->id >= 4)
+        {
+            $data = Mission::whereHas('chauffeurs', function($query) use ($user){
+                return $query->where('users.id',$user->id);
+            })->orderBy('missions.created_at', 'DESC')->get();
+
+            return MissionResource::collection($data);
+        }
+    }
+
     public function allCount()
     {
         $user = Auth::user();

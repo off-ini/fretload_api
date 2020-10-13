@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DestinataireResource;
 use App\Http\Resources\DestinataireSelectResource;
 use Illuminate\Http\Request;
-use Validator;
-use Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class DestinataireController extends Controller
 {

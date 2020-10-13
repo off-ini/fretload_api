@@ -32,6 +32,7 @@ Route::group(['middleware' => 'jwt', 'prefix' => $v1Prefix], function () {
     Route::get('annonces/news', 'Api\AnnonceController@all_news');
 
     // Missions
+    Route::get('missions/get/all', 'Api\MissionController@all');
     Route::get('missions/statistics', 'Api\MissionController@allCount');
     Route::post('missions/up/encours/{id}', 'Api\MissionController@upEnCours');
     Route::post('missions/up/livrer/{id}', 'Api\MissionController@upLivrer');
