@@ -43,7 +43,7 @@ class PayementConroller extends Controller
             Mission::sendMessage($msg,$phone);
         }
 
-        return redirect('https://fretload.herokuapp.com/app/missions/paided');
+        return redirect('https://fretload.herokuapp.com/#/app/missions/paided');
     }
 
     /**
