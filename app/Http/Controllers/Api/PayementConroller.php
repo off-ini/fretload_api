@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mission;
 use Illuminate\Http\Request;
 
 class PayementConroller extends Controller
@@ -14,6 +15,7 @@ class PayementConroller extends Controller
      */
     public function index(Request $request)
     {
+        Mission::where(['pading' => 1])->last();
         dd($request->all());
     }
 
