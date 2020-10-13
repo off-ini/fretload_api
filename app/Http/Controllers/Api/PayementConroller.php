@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mission;
+use App\Payement;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,31 @@ class PayementConroller extends Controller
     {
         $mission = Mission::where(['paiding' => 1])->first();
         $user = User::where(['paiding' => 1])->first();
-        dd(['all' => $request->all(), 'mission' => $mission, 'user' => $user]);
+        if($mission && $user)
+        {
+            $mission->update([
+                'status' => 3,
+                'paiding' => 0
+            ]);
+
+            $user->update([
+                'paiding' => 0
+            ]);
+
+            Payement::create([
+                'montant' => $mission->montant,
+                'mode_payement_id' => 1,
+                'mission_id' => $mission->id,
+                'user_id' => $user->id
+            ]);
+
+            $msg = "La livraison de [ " . $mission->marchandise->libelle . " ]  La été payer ";
+            $phone = '+228'.$mission->transpoteur->phone;
+
+            Mission::sendMessage($msg,$phone);
+        }
+
+        return redirect('https://fretload.herokuapp.com/app/missions/paided');
     }
 
     /**
