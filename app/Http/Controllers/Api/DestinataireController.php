@@ -53,7 +53,7 @@ class DestinataireController extends Controller
             'sexe' => 'required',
             'email' => 'required|email',
             'naissance' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|integer',
             'ville_id' => 'required',
             'user_id' => 'required',
         ]);

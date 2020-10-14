@@ -135,8 +135,8 @@ class MissionController extends Controller
         $v = Validator::make($request->all(), [
             'title' => 'required',
             'montant' => 'required',
-            'date_depart_pre' => 'required',
-            'date_arriver_pre' => 'required',
+            'date_depart_pre' => 'required|after:tomorrow',
+            'date_arriver_pre' => 'required|before_or_equal:date_depart_pre',
             'marchandise_id' => 'required',
             'destinataire_id' => 'required',
             'proposition_id' => 'required',

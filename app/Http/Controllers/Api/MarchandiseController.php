@@ -126,7 +126,7 @@ class MarchandiseController extends Controller
             return response()->json(['error' => 'Resource introuvable'], 404);
         else
         {
-            if($all['image'])
+            if(isset($all['image']) && $all['image'])
             {
                 $name = File::write($all['image']);
                 if($name)

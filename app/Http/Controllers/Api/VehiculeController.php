@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\VehiculeResource;
 use App\Vehicule;
 use Illuminate\Http\Request;
-use Validator;
-use Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class VehiculeController extends Controller
 {
@@ -60,6 +60,7 @@ class VehiculeController extends Controller
             $data->user_id = $request->user_id;
 
             $data->libelle = $request->libelle ? $request->libelle : null;
+            $data->status = $request->status ? $request->status : 0;
             $data->description = $request->description ? $request->description : null;
             $data->capacite = $request->capacite ? $request->capacite : null;
             $data->taille = $request->taille ? $request->taille : null;
@@ -118,7 +119,7 @@ class VehiculeController extends Controller
             return response()->json(['error' => 'Resource introuvable'], 404);
         else
         {
-            if($all['image'])
+            if(isset($all['image']) && $all['image'])
             {
                 $name = File::write($all['image']);
                 if($name)

@@ -8,7 +8,7 @@ use App\Http\Resources\TypeVehiculeResource;
 use App\Http\Resources\TypeVehiculeSelectResource;
 use App\TypeVehicule;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class TypeVehiculeController extends Controller
 {
